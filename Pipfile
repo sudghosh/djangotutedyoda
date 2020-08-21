@@ -10,6 +10,7 @@ django = "*"
 pandas = "*"
 matplotlib = "*"
 seaborn = "*"
+django-materializecss-form = "*"
 
 [requires]
 python_version = "3.8"

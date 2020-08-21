@@ -1,0 +1,119 @@
+{%load materializecss %}
+<!DOCTYPE html>
+
+<html>
+
+<head>
+  <!--Import Google Icon Font-->
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <!-- Compiled and minified CSS -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+  <!--custom css for materialize-->
+  <link rel="stylesheet" href="/static/css/style.css">
+  <!--Let browser know website is optimized for mobile-->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!--Title of the page goes here-->
+  <title>{% block title %}Hello World {% endblock title %}</title>
+</head>
+
+<body>
+  <!--main body contents goes here-->
+  <!-- Dropdown Structure -->
+  <ul id="dropdown1" class="dropdown-content">
+    <li><a href="#!">E&M</a></li>
+    <li><a href="#!">Finance</a></li>
+    <li class="divider"></li>
+    <li><a href="#!">Personnel</a></li>
+  </ul>
+  <ul id="dropdown2" class="dropdown-content">
+    
+  </ul>
+  <nav>
+    <div class="nav-wrapper">
+    
+      <ul class="right hide-on-med-and-down">
+        <!-- Dropdown Trigger for userprofile -->
+        {% if request.user.is_authenticated %}
+          <li><a id="userdropdown" class="dropdown-trigger" href="#!" data-target="dropdown2" >Hello, {{ request.user.email }}<i
+          class="material-icons right">arrow_drop_down</i></a></li>
+        {% else %}
+    
+        {% endif %}
+        
+    
+        <li><a href="#">About Us</a></li>
+        <!-- Dropdown Trigger for links dept wise -->
+        <li><a class="dropdown-trigger" href="#!" data-target="dropdown1">Department<i
+              class="material-icons right">arrow_drop_down</i></a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!--Trying columns layout-->
+  <section class="section">
+    <div class="row">
+      <aside class="col s12  l2 green light-2 flow-text truncate">
+        <ul> {% block sidebarleft%}
+          <li>Link 1</li>
+          <li>Link 2</li>
+          <li class="divider"></li>
+          <li>
+            Link 3
+            <ul>
+              <li>Link 1</li>
+              <li>Link 2</li>
+              {% endblock sidebarleft %}
+            </ul>
+          </li>
+        </ul>
+      </aside>
+      <div class="col s12 l8  flow-text">
+        {% block body %}
+        <h2>
+          <p class="">It is a main body section</p>
+        </h2>
+        {% endblock body %}
+      </div>
+      <aside class="col s6 l2 teal darken-1 flow-text truncate hide-on-med-and-down">
+        <p class="flow-text">It is a sidenav right</p>
+      </aside>
+
+    </div>
+  </section>
+
+
+
+  <!--Jquery optional-->
+  <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+  <!-- Compiled and minified JavaScript -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+
+  {% block javascript %}
+  <!--Script for navigation dropdown work-->
+  <!--Script for collapsible things like collapsible tables.-->
+  <script>
+    $(document).ready(function(){
+
+    // Initialize materialize data picker
+    $('.datepicker').datepicker({'format': 'yyyy-mm-dd'});
+    $('select').formSelect();
+    
+    // other functions to make it collapsible
+    $('.collapsible').collapsible();
+    $(".dropdown-trigger").dropdown();
+    $("#userdropdown.dropdown-trigger").dropdown({coverTrigger: false});
+
+    });
+
+    
+
+
+    
+
+  </script>
+
+  {% endblock javascript %}
+</body>
+
+</html>
