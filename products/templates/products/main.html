@@ -1,10 +1,51 @@
 {% extends 'base.html' %}
 
 {% block body %}
-{{products | safe}}
-<hr>
-{{purchase | safe}}
 
-<hr>
-{{df | safe}}
+    {% comment %} {{products | safe}}
+    <hr>
+    {{purchase | safe}}
+
+    <hr> {% endcomment %}
+    {% if error_message %}
+            <p class="flow-text red-text text-darken-5">{{error_message}}</p>
+    {% endif %}
+
+    {% if request.POST %}
+        {% if graph %}
+            <div class='container col s12'>
+                <div class=row>
+                    <img class="responsive-img" src="data:image/png;base64, {{ graph | safe }}">
+                </div>
+            </div>
+        {% endif %}
+    {% endif %}
+    
+    {{df | safe}}
+    
+    <form action="" method="POST">
+    {% csrf_token %}
+    <div class="input-field col s12">
+        <select name="chart_type">
+            <option value="" disabled selected>Choose your option</option>
+            <option value="bar">Bar Chart</option>
+            <option value="line">Line Chart</option>
+            <option value="count">Count Chart</option>
+        </select>
+        <label>Select Chart Type</label>
+        </div>
+        <div class="row">
+        <div class="input-field col s6">
+        <label for="date_from">Date From</label>
+        <input name="date_from"type="text" class="datepicker ">
+        </div>
+        <div class="input-field col s6">
+        <label for="date_to" >Date To</label>
+        <input name="date_to" type="text" class="datepicker ">
+        </div>
+        </div>
+        <button class="btn waves-effect waves-light" type="submit" name="action">Submit
+    <i class="material-icons right">send</i>
+  </button>
+        </form>
 {% endblock body %}
