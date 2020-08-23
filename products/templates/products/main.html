@@ -2,14 +2,34 @@
 
 {% block body %}
 
-    {% comment %} {{products | safe}}
+    {% comment %} 
+    {{products | safe}}
     <hr>
     {{purchase | safe}}
+    <hr> 
+    {% endcomment %}
 
-    <hr> {% endcomment %}
+    {{price.mean | floatformat}}
+    {{price.std | floatformat}}
+    {{price.median | floatformat }}
+
+    <!-- Modal Structure -->
+  <div id="price_modal" class="modal">
+    <div class="modal-content">
+      <h4>Modal Header</h4>
+      <p>A bunch of text</p>
+      <p>A bunch of text</p>
+      <p>A bunch of text</p>
+    </div>
+    <div class="modal-footer">
+      <a href="#!" class="modal-close waves-effect waves-green btn-flat">Agree</a>
+    </div>
+  </div>
+
     {% if error_message %}
             <p class="flow-text red-text text-darken-5">{{error_message}}</p>
     {% endif %}
+    
 
     {% if request.POST %}
         {% if graph %}
@@ -45,7 +65,10 @@
         </div>
         </div>
         <button class="btn waves-effect waves-light" type="submit" name="action">Submit
-    <i class="material-icons right">send</i>
-  </button>
+        <i class="material-icons right">send</i>
+        </button>
         </form>
+
+    <!-- Modal Trigger -->
+  <button data-target="price_modal" class="btn modal-trigger">Modal</button>
 {% endblock body %}
