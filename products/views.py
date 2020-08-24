@@ -1,11 +1,13 @@
-from django.shortcuts import render, HttpResponseRedirect
+from django.shortcuts import render, redirect, HttpResponseRedirect
 from django.urls import reverse
+from django.contrib import messages
 from datetime import datetime
 import pandas as pd
 from .models import Product, Purchase
 from .utils import get_simple_plot
 from .forms import PurchaseForm
 # Create your views here.
+
 
 def chart_select_view(request):
     error_message = None
@@ -61,21 +63,30 @@ def chart_select_view(request):
 
     return render(request,'products/main.html',context)
 
+# https://djangokatya.wordpress.com/2019/07/05/how-to-clear-post-data/
+# How to clear POST data in Django – ‘Confirm Form Resubmission’ // 1-minute guide
 
 def add_purchase_view(request):
+    
     record_added_message=None
+    
     form = PurchaseForm(request.POST or None)
     
     if form.is_valid():
             obj = form.save(commit=False)
             obj.salesman = request.user
             obj.save()
-            record_added_message="Record Added Successfully"
             form = PurchaseForm()
+            messages.success(request,'Record Added Successfully')
+            return HttpResponseRedirect(request.path)
             
-
-    
-    
+            
+    else:
+        
+        form=PurchaseForm()
+        record_added_message=None
+        
+   
     context = {
         'form':form,
         'record_added_message':record_added_message,
