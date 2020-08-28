@@ -31,17 +31,18 @@ def get_simple_plot(chart_type, *args, **kwargs):
     y = kwargs.get('y')
     data = kwargs.get('data')
     if chart_type == 'bar':
-        title="Date Wise Total Price"
+        title="Date Wise Total Price (Bar)"
         plt.title(title)
         plt.bar(x,y)
     elif chart_type == "line":
-        title="title"
+        title="Date Wise Purchase Graph (Line)"
         plt.title(title)
         plt.plot(x,y)
-    elif chart_type == "count":
+    elif chart_type == "Transaction count plot (Count)":
         title="title"
         plt.title(title)
         sns.countplot('name',data=data)
+    plt.xticks(rotation=45)
     plt.tight_layout()
     graph = get_image()
     return graph

@@ -70,5 +70,9 @@
         </form>
 
     <!-- Modal Trigger -->
-  <button data-target="price_modal" class="btn modal-trigger">Modal</button>
+  <div class='row'>
+  <button data-target="price_modal" class="btn modal-trigger s12 l6">Modal</button>
+  <a class="waves-effect waves-light btn-small s12 l6" href='{% url "products:add_purchase_data" %}'><i class="material-icons right">add</i>Add Records</a>
+  
+  </div>
 {% endblock body %}

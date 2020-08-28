@@ -14,40 +14,39 @@ def chart_select_view(request):
     df=None
     graph = None
     price = None
-    products_df = pd.DataFrame(Product.objects.all().values())
-    purchase_df = pd.DataFrame(Purchase.objects.all().values())
-    products_df['name_id'] = products_df['id']
-    
+    try:
+        products_df = pd.DataFrame(Product.objects.all().values())
+        purchase_df = pd.DataFrame(Purchase.objects.all().values())
+        products_df['name_id'] = products_df['id']
+    except:
+        products_df = None
+        purchase_df = None
 
-    if purchase_df.shape[0] > 0:
-        df = pd.merge(purchase_df,products_df,how='left',on='name_id').drop(['id_y','date_y'],axis=1).rename({'id_x':'id','date_x':'date'},axis=1)
-        price = df['price']
-        if request.method == 'POST':
-            chart_type = request.POST.get('chart_type')
-            date_from = request.POST['date_from']
-            date_to = request.POST['date_to']
-            
-            
-            
-            
-            
-
-            df['date'] = df['date'].apply(lambda x: x.strftime('%d-%m-%Y'))
-            df2 = df.groupby('date',as_index=False)['total_price'].agg('sum')
-            
-            if chart_type != None:
-                if date_from != "" and date_to != "":
-                    date_from = datetime.strptime(date_from,"%Y-%m-%d").date().strftime('%d-%m-%Y')
-                    date_to = datetime.strptime(date_to,"%Y-%m-%d").date().strftime('%d-%m-%Y')
-                    if date_to > date_from:
-                        df = df[(df['date']>date_from) & (df['date']<date_to)]
-                        df2 = df.groupby('date',as_index=False)['total_price'].agg('sum')
-                    else:
-                        error_message = "From Date should not be greater than To date"
-                # function to create chart
-                graph = get_simple_plot(chart_type,x=df2['date'], y=df2['total_price'], data=df)
-            else:
-                error_message = 'Please select a chart type to continue.'
+    if purchase_df is not None:
+        if purchase_df.shape[0] > 0:
+            df = pd.merge(purchase_df,products_df,how='left',on='name_id').drop(['id_y','date_y'],axis=1).rename({'id_x':'id','date_x':'date'},axis=1)
+            price = df['price']
+            if request.method == 'POST':
+                chart_type = request.POST.get('chart_type')
+                date_from = request.POST['date_from']
+                date_to = request.POST['date_to']
+                
+                df['date'] = df['date'].apply(lambda x: x.strftime('%d-%m-%Y'))
+                df2 = df.groupby('date',as_index=False)['total_price'].agg('sum')
+                
+                if chart_type != None:
+                    if date_from != "" and date_to != "":
+                        date_from = datetime.strptime(date_from,"%Y-%m-%d").date().strftime('%d-%m-%Y')
+                        date_to = datetime.strptime(date_to,"%Y-%m-%d").date().strftime('%d-%m-%Y')
+                        if date_to > date_from:
+                            df = df[(df['date']>date_from) & (df['date']<date_to)]
+                            df2 = df.groupby('date',as_index=False)['total_price'].agg('sum')
+                        else:
+                            error_message = "From Date should not be greater than To date"
+                    # function to create chart
+                    graph = get_simple_plot(chart_type,x=df2['date'], y=df2['total_price'], data=df)
+                else:
+                    error_message = 'Please select a chart type to continue.'
     else:
         error_message = "No Records in the Database."
 
@@ -79,17 +78,12 @@ def add_purchase_view(request):
             form = PurchaseForm()
             messages.success(request,'Record Added Successfully')
             return HttpResponseRedirect(request.path)
-            
-            
     else:
         
         form=PurchaseForm()
         record_added_message=None
-        
-   
     context = {
         'form':form,
-        'record_added_message':record_added_message,
     }
     return render(request,'products/add.html',context)
 

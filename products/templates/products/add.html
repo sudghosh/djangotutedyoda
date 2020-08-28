@@ -4,10 +4,6 @@
 
 {% block body%}
 
-
-{% if record_added_message %}
-     <p class="flow-text green-text text-darken-5">{{record_added_message}}</p>
-{% endif %}
 {% if messages %}
     {% for message in messages  %}
         <p class="flow-text green-text text-darken-5">{{message}}</p>

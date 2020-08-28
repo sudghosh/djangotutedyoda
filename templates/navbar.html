@@ -1,0 +1,42 @@
+{% url 'products:chart_select_view' as products_performance_view %}
+{% url 'products:add_purchase_data' as purchase_add_view %}
+{% url 'csvs:data_upload_view' as data_upload_view %}
+
+
+  <!--main body contents goes here-->
+  <!-- Dropdown Structure -->
+  <ul id="dropdown1" class="dropdown-content">
+    <li><a href="#!">E&M</a></li>
+    <li><a href="#!">Finance</a></li>
+    <li class="divider"></li>
+    <li><a href="#!">Personnel</a></li>
+  </ul>
+
+  {% comment %} This drop down is just used for user profile interection {% endcomment %}
+  <ul id="dropdown2" class="dropdown-content">
+    
+  </ul>
+  <nav>
+    <div class="nav-wrapper">
+    
+      <ul class="right hide-on-med-and-down">
+        <!-- Dropdown Trigger for userprofile -->
+        {% if request.user.is_authenticated %}
+          <li><a id="userdropdown" class="dropdown-trigger" href="#!" data-target="dropdown2" >Hello, {{ request.user.email }}<i
+          class="material-icons right">arrow_drop_down</i></a></li>
+        {% else %}
+    
+        {% endif %}
+        
+    
+        <li class= "{% if request.path == products_performance_view  %}active{% endif %}"><a href={{products_performance_view}} >Performance</a></li>
+        <li class="{% if request.path == purchase_add_view  %}active{% endif %}"><a href={{purchase_add_view}}>Add Purchase</a></li>
+        <li class="{% if request.path == data_upload_view  %}active{% endif %}"><a href={{data_upload_view}}>Upload Purchase Data</a></li>
+        
+        
+        <!-- Dropdown Trigger for links dept wise -->
+        <li><a class="dropdown-trigger" href="#!" data-target="dropdown1">Department<i
+              class="material-icons right">arrow_drop_down</i></a></li>
+      </ul>
+    </div>
+  </nav>

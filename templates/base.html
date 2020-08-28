@@ -1,4 +1,5 @@
 {%load materializecss %}
+{% include 'navbar.html' %}
 <!DOCTYPE html>
 
 <html>
@@ -18,37 +19,6 @@
 </head>
 
 <body>
-  <!--main body contents goes here-->
-  <!-- Dropdown Structure -->
-  <ul id="dropdown1" class="dropdown-content">
-    <li><a href="#!">E&M</a></li>
-    <li><a href="#!">Finance</a></li>
-    <li class="divider"></li>
-    <li><a href="#!">Personnel</a></li>
-  </ul>
-  <ul id="dropdown2" class="dropdown-content">
-    
-  </ul>
-  <nav>
-    <div class="nav-wrapper">
-    
-      <ul class="right hide-on-med-and-down">
-        <!-- Dropdown Trigger for userprofile -->
-        {% if request.user.is_authenticated %}
-          <li><a id="userdropdown" class="dropdown-trigger" href="#!" data-target="dropdown2" >Hello, {{ request.user.email }}<i
-          class="material-icons right">arrow_drop_down</i></a></li>
-        {% else %}
-    
-        {% endif %}
-        
-    
-        <li><a href="#">About Us</a></li>
-        <!-- Dropdown Trigger for links dept wise -->
-        <li><a class="dropdown-trigger" href="#!" data-target="dropdown1">Department<i
-              class="material-icons right">arrow_drop_down</i></a></li>
-      </ul>
-    </div>
-  </nav>
 
   <!--Trying columns layout-->
   <section class="section">
@@ -107,11 +77,6 @@
     $('.modal').modal();
 
     });
-
-    
-
-
-    
 
   </script>
 

@@ -33,6 +33,7 @@ ALLOWED_HOSTS = []
 
 INSTALLED_APPS = [
     'materializecssform',
+    'csvs',
     'products',
     'django.contrib.admin',
     'django.contrib.auth',
