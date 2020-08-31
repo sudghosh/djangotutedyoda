@@ -4,11 +4,26 @@ from django.contrib import messages
 from datetime import datetime
 import pandas as pd
 from .models import Product, Purchase
-from .utils import get_simple_plot
+from .utils import get_simple_plot, get_salesman_by_id, sales_view_plot
 from .forms import PurchaseForm
+from django.http import HttpResponse
+from django.contrib.auth.decorators import login_required
 # Create your views here.
 
+@login_required
+def sales_dist_view(request):
+    df = pd.DataFrame(Purchase.objects.all().values())
+    df['salesman_id']=df['salesman_id'].apply(get_salesman_by_id)
+    df.rename({'salesman_id':'salesman'}, axis=1, inplace=True)
+    df['date'] = df['date'].apply(lambda x: x.strftime('%d-%m-%Y'))
+    graph = sales_view_plot(x='date',y='total_price',hue='salesman',df=df)
+    context = {
+        'graph':graph
+    }
+    return render(request,'products/sales.html',context)
 
+
+@login_required
 def chart_select_view(request):
     error_message = None
     df=None
@@ -65,6 +80,7 @@ def chart_select_view(request):
 # https://djangokatya.wordpress.com/2019/07/05/how-to-clear-post-data/
 # How to clear POST data in Django – ‘Confirm Form Resubmission’ // 1-minute guide
 
+@login_required
 def add_purchase_view(request):
     
     record_added_message=None
@@ -86,4 +102,3 @@ def add_purchase_view(request):
         'form':form,
     }
     return render(request,'products/add.html',context)
-

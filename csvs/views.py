@@ -23,6 +23,7 @@ def data_upload_view(request):
             with open(obj.file_name.path,'r') as csv_file1:
                 reader = pd.read_csv(csv_file1)
                 data = reader.values.tolist()
+                reader = None
                 for row in data:
                     user = User.objects.get(id=int(row[4]))
                     prod, _ = Product.objects.get_or_create(name=row[0])

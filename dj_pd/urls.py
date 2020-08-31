@@ -17,11 +17,16 @@ from django.contrib import admin
 from django.urls import path,include
 from django.conf import settings
 from django.conf.urls.static import static
+from .views import home_view, login_view, logout_view
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('',home_view,name='home'),
+    path('login/',login_view,name='login_view'),
+    path('logout/',logout_view,name='logout_view'),
     path('performance/', include('products.urls')),
     path('csvs/',include('csvs.urls', namespace='csvs')),
+    path('customers/',include('customers.urls', namespace='customers')),
 ]
 
 urlpatterns += static(settings.MEDIA_URL,document_root=settings.MEDIA_ROOT)

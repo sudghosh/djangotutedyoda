@@ -1,7 +1,11 @@
+{% url 'home' as path_to_home %}
+{% url 'login_view' as path_to_login %}
+{% url 'logout_view' as path_to_logout %}
 {% url 'products:chart_select_view' as products_performance_view %}
+{% url 'products:sales_view' as path_to_sales %}
 {% url 'products:add_purchase_data' as purchase_add_view %}
 {% url 'csvs:data_upload_view' as data_upload_view %}
-
+{% url 'customers:main-customers-view' as main_customers_view %}
 
   <!--main body contents goes here-->
   <!-- Dropdown Structure -->
@@ -20,19 +24,19 @@
     <div class="nav-wrapper">
     
       <ul class="right hide-on-med-and-down">
+        
         <!-- Dropdown Trigger for userprofile -->
         {% if request.user.is_authenticated %}
-          <li><a id="userdropdown" class="dropdown-trigger" href="#!" data-target="dropdown2" >Hello, {{ request.user.email }}<i
-          class="material-icons right">arrow_drop_down</i></a></li>
+          <li class= "{% if request.path == path_to_home  %}active{% endif %}"><a href={{path_to_home}} >Home</a></li>
+          <li class= "{% if request.path == products_performance_view  %}active{% endif %}"><a href={{products_performance_view}} >Performance</a></li>
+          <li class= "{% if request.path == path_to_sales  %}active{% endif %}"><a href={{path_to_sales}} >Sales</a></li>
+          <li class= "{% if request.path == main_customers_view  %}active{% endif %}"><a href={{main_customers_view}} >Customers</a></li>
+          <li class="{% if request.path == purchase_add_view  %}active{% endif %}"><a href={{purchase_add_view}}>Add Purchase</a></li>
+          <li class="{% if request.path == data_upload_view  %}active{% endif %}"><a href={{data_upload_view}}>Upload Purchase Data</a></li>
+          <li class="{% if request.path == path_to_logout  %}active{% endif %}"><a href={{path_to_logout}}>Logout</a></li>
         {% else %}
-    
+          <li class="{% if request.path == path_to_login  %}active{% endif %}"><a href={{path_to_login}}>Login</a></li>
         {% endif %}
-        
-    
-        <li class= "{% if request.path == products_performance_view  %}active{% endif %}"><a href={{products_performance_view}} >Performance</a></li>
-        <li class="{% if request.path == purchase_add_view  %}active{% endif %}"><a href={{purchase_add_view}}>Add Purchase</a></li>
-        <li class="{% if request.path == data_upload_view  %}active{% endif %}"><a href={{data_upload_view}}>Upload Purchase Data</a></li>
-        
         
         <!-- Dropdown Trigger for links dept wise -->
         <li><a class="dropdown-trigger" href="#!" data-target="dropdown1">Department<i

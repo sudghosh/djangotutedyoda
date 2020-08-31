@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+{% load materializecss %}
+
+{% block title %}
+    Customer Data
+{% endblock title %}
+
+{% block body %}
+    <h1> Correlation {{corr}}</h1>
+    {% if graph %}
+        <img class="responsive-img" src="data:image/png;base64, {{ graph | safe }}">
+    {% endif %}
+
+{% endblock body %}

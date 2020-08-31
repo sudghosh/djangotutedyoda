@@ -1,7 +1,25 @@
+from django.contrib.auth.models import User
 import matplotlib.pyplot as plt
 import seaborn as sns
 from io import BytesIO
 import base64
+
+def sales_view_plot(df,*args,**kwargs):
+    plt.switch_backend('AGG')
+    fig = plt.figure(figsize=(10,4))
+    df = df
+    x = kwargs.get('x')
+    y = kwargs.get('y')
+    hue = kwargs.get('hue')
+    plt.xticks(rotation=45)
+    sns.barplot(x=x,y=y,hue=hue,data=df)    
+    plt.tight_layout()
+    graph = get_image()
+    return graph
+
+def get_salesman_by_id(val):
+    salesman = User.objects.get(id=val)
+    return salesman
 
 def get_image():
     # Creates a bytes buffer for the image to save.
@@ -38,8 +56,8 @@ def get_simple_plot(chart_type, *args, **kwargs):
         title="Date Wise Purchase Graph (Line)"
         plt.title(title)
         plt.plot(x,y)
-    elif chart_type == "Transaction count plot (Count)":
-        title="title"
+    elif chart_type == "count":
+        title="Transaction count plot (Count)"
         plt.title(title)
         sns.countplot('name',data=data)
     plt.xticks(rotation=45)

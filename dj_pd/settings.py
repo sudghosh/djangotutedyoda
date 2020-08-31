@@ -35,6 +35,7 @@ INSTALLED_APPS = [
     'materializecssform',
     'csvs',
     'products',
+    'customers',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -103,7 +104,7 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-
+LOGIN_URL = 'login_view'
 # Internationalization
 # https://docs.djangoproject.com/en/3.1/topics/i18n/
 

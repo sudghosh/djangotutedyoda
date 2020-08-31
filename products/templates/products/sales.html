@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+{% load materializecss %}
+
+{% block title %}Sales{% endblock title %}
+
+{% block body %}
+        {% if graph %}
+            <div class='container col s12'>
+                <div class=row>
+                    <img class="responsive-img" src="data:image/png;base64, {{ graph | safe }}">
+                </div>
+            </div>
+        {% endif %}
+{% endblock body %}
